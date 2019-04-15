@@ -35,6 +35,13 @@ def index(request):
         tw["tweet_text"] = tweet.tweet_text
         tw["tweet_author"] = tweet.user.username
         tw["created"] = str(tweet.tweet_created_timestamp)
+        tw["like_count"] = tweet.like_count
+        tw["reply_count"] = tweet.reply_count
+        tw["retweet_count"] = tweet.reply_count
+        if tweet.is_retweeted:
+            tw["original_tweet_id"] = tweet.original_tweet_id
+        if tweet.media_id:
+            tw["media_id"] = tweet.media_id
         tweet_list.append(tw)
     payload = json.dumps(tweet_list)
     return HttpResponse(payload, status=200, content_type="application/json")
